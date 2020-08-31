@@ -1,5 +1,5 @@
 function [J, grad] = computeCost (nn_params, input_layer, hidden_layer, output_layer, X_train, y_train, lambda)
-  # Reshaping thetas
+  # Reshaping parameters
   theta1 = reshape(nn_params(1:hidden_layer * (input_layer + 1)), ...
                  hidden_layer, (input_layer + 1));
 
@@ -35,7 +35,7 @@ function [J, grad] = computeCost (nn_params, input_layer, hidden_layer, output_l
   endfor
   J = (-1) * sum_cost / m;
   
-  fprintf('Accuracy %d%%\n', acc/m);
+  fprintf('Accuracy %d%%\n', acc / m);
 
   # Regularization
   reg = lambda / (2*m);
@@ -63,16 +63,17 @@ function [J, grad] = computeCost (nn_params, input_layer, hidden_layer, output_l
   d1 = 0;
   d2 = 0;
 
-  delta = zeros(m,2);
+  delta = zeros(m, 2);
 
   for t = 1:m
     a1 = X_train(i,:)'; # a1 is a column vector 1024 x 1 with the input values
     a1 = [ones(1,1) ; a1]; # Adding the bias unit - a1 is 1025 x 1
-    z2 = theta1 * a1; # Computing z2 - 2048 x 1
+    z2 = theta1 * a1 ./ 255; # Computing z2 - 2048 x 1
     a2 = sigmoid(z2); # Computing the activation vector for layer 2
     a2 = [ones(1,1) ; a2]; # Adding the bias unit, a1 is 2049 x 1
-    z3 = theta2 * a2; # Computing z3 - 26 x 1
-    hyp = sigmoid(z3); # The hypothesis
+    z3 = theta2 * a2 ./ 255; # Computing z3 - 26 x 1
+    a3 = sigmoid(z3); # Computing the activation vector for layer 3
+    hyp = a3; # The hypothesis
     
     # Compute current y column solution for current input
     y_column = [ zeros(y_train(i,1)-1,1); ones(1,1); zeros(output_layer - y_train(i,1),1) ];
