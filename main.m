@@ -2,7 +2,7 @@
 clear ; close all; clc
 pkg load image;
 
-fprintf('Loading data ... \n');
+fprintf('Loading data ... ');
 
 ### Load Training Data ###
 
@@ -49,7 +49,7 @@ for i = 0 : 25
   endwhile
   #fprintf('... done\n');
 endfor
-fprintf('... done\n');
+fprintf('done\n');
 
 # Feature scaling
 fprintf('Scaling features ... ');
@@ -68,22 +68,33 @@ theta2 = zeros(output_layer, hidden_layer + 1);
 [theta1 theta2] = assignParameters(theta1, theta2);
 
 # Unroll parameters 
-nn_params = [theta1(:) ; theta2(:)];
+initial_nn_params = [theta1(:) ; theta2(:)];
 
 # Training the Neural Network
-number_iterations = 10;
+number_iterations = 1;
 options = optimset('MaxIter', number_iterations);
 
-lambda = 1;
+lambda = 0.03;
+
+% TEST %
+[J, grad] = computeCost (initial_nn_params, input_layer, hidden_layer, output_layer, X_train, y_train, lambda);
+J
+
+pause
 
 # Create "short hand" for the cost function to be minimized
 costFunction = @(p) computeCost(p, input_layer, hidden_layer, output_layer, X_train, y_train, lambda);
 
 # Now, costFunction is a function that takes in only one argument (the
 # neural network parameters)
-[nn_params, cost] = fmincg(costFunction, nn_params, options);
+fprintf('STARTED OPTIMIZATION\n');
+[nn_params, cost] = fmincg(costFunction, initial_nn_params, options);
 
+cost
+pause
 
+fprintf('FINISHED OPTIMIZATION\n');
+pause
 # Reshape the optimal parameters
 theta1 = reshape(nn_params(1:hidden_layer * (input_layer + 1)), ...
                  hidden_layer, (input_layer + 1));

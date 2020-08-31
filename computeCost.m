@@ -21,9 +21,10 @@ function [J, grad] = computeCost (nn_params, input_layer, hidden_layer, output_l
     a3 = sigmoid(z3); # Computing the activation vector for layer 3
     hyp = a3; # The hypothesis
     [max_el max_index] = max(hyp);
-    
+
     # Compute current y column solution for current input
     y_column = [ zeros(y_train(i,1)-1,1); ones(1,1); zeros(output_layer - y_train(i,1),1) ];
+    
     if (y_column(max_index,1) == 1)
       acc+=1;
     endif
@@ -65,7 +66,7 @@ function [J, grad] = computeCost (nn_params, input_layer, hidden_layer, output_l
 
   delta = zeros(m, 2);
 
-  for t = 1:m
+  for i = 1:m
     a1 = X_train(i,:)'; # a1 is a column vector 1024 x 1 with the input values
     a1 = [ones(1,1) ; a1]; # Adding the bias unit - a1 is 1025 x 1
     z2 = theta1 * a1 ./ 255; # Computing z2 - 2048 x 1
@@ -77,7 +78,10 @@ function [J, grad] = computeCost (nn_params, input_layer, hidden_layer, output_l
     
     # Compute current y column solution for current input
     y_column = [ zeros(y_train(i,1)-1,1); ones(1,1); zeros(output_layer - y_train(i,1),1) ];
-      
+    if (y_train(i,1) == 0)
+      y_column = y_column(rows(y_column)-1, :);
+    endif
+    
     delta3 = a3 - y_column;
     delta2 = (theta2'*delta3) .* (a2 .* (1 - a2));
     delta2 = delta2(2:end);
@@ -88,8 +92,8 @@ function [J, grad] = computeCost (nn_params, input_layer, hidden_layer, output_l
     
   endfor
 
-  theta1_grad = d1 / m;
-  theta2_grad = d2 / m;
+  theta1_grad = d1 / m + lambda / (2*m) * sum(theta1(2:end));
+  theta2_grad = d2 / m + lambda / (2*m) * sum(theta2(2:end));
   
   grad = [theta1_grad(:) ; theta2_grad(:)];
   
