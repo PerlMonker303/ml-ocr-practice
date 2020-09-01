@@ -71,16 +71,10 @@ theta2 = zeros(output_layer, hidden_layer + 1);
 initial_nn_params = [theta1(:) ; theta2(:)];
 
 # Training the Neural Network
-number_iterations = 1;
+number_iterations = 20;
 options = optimset('MaxIter', number_iterations);
 
 lambda = 0.03;
-
-% TEST %
-[J, grad] = computeCost (initial_nn_params, input_layer, hidden_layer, output_layer, X_train, y_train, lambda);
-J
-
-pause
 
 # Create "short hand" for the cost function to be minimized
 costFunction = @(p) computeCost(p, input_layer, hidden_layer, output_layer, X_train, y_train, lambda);
@@ -90,11 +84,7 @@ costFunction = @(p) computeCost(p, input_layer, hidden_layer, output_layer, X_tr
 fprintf('STARTED OPTIMIZATION\n');
 [nn_params, cost] = fmincg(costFunction, initial_nn_params, options);
 
-cost
-pause
-
 fprintf('FINISHED OPTIMIZATION\n');
-pause
 # Reshape the optimal parameters
 theta1 = reshape(nn_params(1:hidden_layer * (input_layer + 1)), ...
                  hidden_layer, (input_layer + 1));
@@ -115,7 +105,7 @@ y_cv = zeros(m_cv, 1);
 k = 1;
 for i = 0 : 25
   letter = char(i+65);
-  fprintf("Letter %c ...\n", letter);
+  #fprintf("Letter %c ...\n", letter);
   f = 1;
   for j = 1:max_cv_data
     try
@@ -133,7 +123,7 @@ for i = 0 : 25
   
   # f = number of missing images
   j = max_cv_data + 1;
-  fprintf('%d failures for letter %c  ', f, i+65);
+  #fprintf('%d failures for letter %c  ', f, i+65);
   while (f > 0)
     try
       string = strcat('./data/Validation/', letter ,'/', num2str(j), '.jpg');
@@ -149,7 +139,7 @@ for i = 0 : 25
     end_try_catch
     j+=1;
   endwhile
-  fprintf('... done\n');
+  #fprintf('... done\n');
 endfor
 fprintf('... done\n');
 
