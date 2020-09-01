@@ -58,7 +58,7 @@ fprintf('done\n');
 
 # Design the Neural Network
 input_layer = 32*32; # 1024
-hidden_layer = input_layer; # 1024
+hidden_layer = input_layer; # 1024 / 2
 output_layer = 26; # vector of 1s and 0s with 26 rows
 
 theta1 = zeros(hidden_layer, input_layer + 1);
@@ -71,10 +71,12 @@ theta2 = zeros(output_layer, hidden_layer + 1);
 initial_nn_params = [theta1(:) ; theta2(:)];
 
 # Training the Neural Network
-number_iterations = 20;
+number_iterations = 200;
 options = optimset('MaxIter', number_iterations);
 
 lambda = 0.03;
+
+[J grad] = computeCost(initial_nn_params, input_layer, hidden_layer, output_layer, X_train, y_train, lambda);
 
 # Create "short hand" for the cost function to be minimized
 costFunction = @(p) computeCost(p, input_layer, hidden_layer, output_layer, X_train, y_train, lambda);
@@ -83,6 +85,7 @@ costFunction = @(p) computeCost(p, input_layer, hidden_layer, output_layer, X_tr
 # neural network parameters)
 fprintf('STARTED OPTIMIZATION\n');
 [nn_params, cost] = fmincg(costFunction, initial_nn_params, options);
+
 
 fprintf('FINISHED OPTIMIZATION\n');
 # Reshape the optimal parameters

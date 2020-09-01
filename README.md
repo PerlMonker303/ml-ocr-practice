@@ -7,7 +7,8 @@
 </p>
 <h2>Results</h2>
 <p>
-  The cross-validation set of data contains 100 * 26 = 2600 entries. It managed to predict 0.03% correct so far.
+  On the training data the algorithm has an accuracy of 100%. 
+  The cross-validation set of data contains 100 * 26 = 2600 entries. It managed to predict correctly around 69% of the data.
 </p>
 <h2>Concepts practiced</h2>
 <ul>
@@ -15,5 +16,4 @@
   <li>Neural Network</li>
   <li>Feature Scaling using Mean Normalization</li>
   <li>Batch Gradient Descent</li>
-  
 </ul>
