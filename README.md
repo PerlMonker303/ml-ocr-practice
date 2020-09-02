@@ -24,7 +24,7 @@ In order to test your own data you must do the following:
   
   <li>Create a directory called "data" in the root directory</li>
   <li>First make sure you have the two folders provided by the Kaggle dataset (link in the description above). You need these data entries for your algorithm to 
-  learn and validate</li>
+  learn and validate (they must be placed both inside directory "data" which you just created)</li>
   <li>Inside of directory "data" create another directory called "Test"</li>
   <li>Inside of directory "Test" you will store all your images you want to test</li>
   <li>Make sure the images that you add are of size 32x32 pixels, format ".png" and have a name of the following form: "test_X_N" where 
