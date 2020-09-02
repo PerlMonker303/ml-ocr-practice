@@ -17,3 +17,20 @@
   <li>Feature Scaling using Mean Normalization</li>
   <li>Batch Gradient Descent</li>
 </ul>
+
+<h2>How to test your own data?</h2>
+In order to test your own data you must do the following:
+<ol>
+  
+  <li>Create a directory called "data" in the root directory</li>
+  <li>First make sure you have the two folders provided by the Kaggle dataset (link in the description above). You need these data entries for your algorithm to 
+  learn and validate</li>
+  <li>Inside of directory "data" create another directory called "Test"</li>
+  <li>Inside of directory "Test" you will store all your images you want to test</li>
+  <li>Make sure the images that you add are of size 32x32 pixels, format ".png" and have a name of the following form: "test_X_N" where 
+  X denotes the letter you drew and N denotes the index of the image (starting from 1)</li>
+  <li>Now you must go in "main.m" before the last statement and modify variable "m_test" to be equal to the number of images you want to test</li>
+  <li>In the function call "testData" make sure you add as the last parameter the letter you want to find in a string/character format ('A')</li>
+  <li>Now run the "main.m" script and wait for the "testData.m" script to run. For each letter you will be prompted with the results and a label, 
+  either "SUCCESS" or "FAILED" and some additional info. You must press any key on your keyboard to continue and go to the next letter.</li
+</ol>

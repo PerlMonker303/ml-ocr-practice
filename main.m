@@ -71,7 +71,7 @@ theta2 = zeros(output_layer, hidden_layer + 1);
 initial_nn_params = [theta1(:) ; theta2(:)];
 
 # Training the Neural Network
-number_iterations = 200;
+number_iterations = 300;
 options = optimset('MaxIter', number_iterations);
 
 lambda = 0.03;
@@ -99,7 +99,7 @@ theta2 = reshape(nn_params((1 + (hidden_layer * (input_layer + 1))):end), ...
 # Now we cross-validate the obtained optimal thetas and compute the accuracy
 
 ### Load Validation Data ###
-fprintf("Started Cross-Validation ...\n");
+fprintf("Started Cross-Validation ...");
 
 max_cv_data = 10; # 100
 m_cv = max_cv_data * 26;
@@ -144,7 +144,7 @@ for i = 0 : 25
   endwhile
   #fprintf('... done\n');
 endfor
-fprintf('... done\n');
+fprintf(' done\n');
 
 # Feature scaling
 fprintf('Scaling features ... ');
@@ -158,3 +158,7 @@ fprintf('done\n');
 # computeCostValidation() => feedforward and check if the results match the y column
 accuracy = crossValidation(X_cv, y_cv, theta1, theta2, output_layer);
 fprintf('Accuracy on cv: %d%%\n', accuracy);
+
+# Now we run some of our own tests made in paint
+m_test = 3; # Specify here how many test data entries you want
+testData(m_test, theta1, theta2, output_layer, 'A');
